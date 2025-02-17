@@ -1,4 +1,4 @@
-package com.example.mydemo.ui.home
+package com.example.mydemo.home.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
