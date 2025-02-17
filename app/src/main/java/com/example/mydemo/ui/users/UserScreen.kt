@@ -10,8 +10,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
-    Surface(color = Color.Black) {
+fun UserScreen(
+    onNextButtonClicked: (Int) -> Unit,
+    modifier: Modifier = Modifier) {
+    Surface(color = Color.Red) {
         Text(
             text = "This will be our user overview!",
             modifier = modifier.padding(24.dp)
@@ -21,6 +23,9 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun HomeScreenPreview() {
-    HomeScreen()
+fun UserScreenPreview() {
+    UserScreen(
+        onNextButtonClicked = TODO(),
+        modifier = TODO()
+    )
 }
