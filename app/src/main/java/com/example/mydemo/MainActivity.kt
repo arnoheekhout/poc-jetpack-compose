@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.android_2425_gent10.ui.components.NavBar
 import com.example.mydemo.common.composables.theme.DemoTheme
 import com.example.mydemo.home.ui.HomeScreen
+import com.example.mydemo.shops.ui.CategoryScreen
 import com.example.mydemo.shops.ui.ShopScreen
 import com.example.mydemo.users.ui.UserScreen
 
@@ -67,6 +68,18 @@ fun DemoApp() {
                 composable(route = DemoScreens.Shop.name) {
                     ShopScreen(navController = navController)
                 }
+
+                composable(route = "categoryScreen/{shopName}") { backStackEntry ->
+                    val shopName = backStackEntry.arguments?.getString("shopName") ?: "Onbekend"
+                    CategoryScreen(navController = navController, shopName = shopName)
+                }
+
+                composable(route = "productsScreen/{shopName}/{category}") { backStackEntry ->
+                    val shopName = backStackEntry.arguments?.getString("shopName") ?: "Onbekend"
+                    val category = backStackEntry.arguments?.getString("category") ?: "Onbekend"
+                    //ProductsScreen(shopName = shopName, category = category)
+                }
+
             }
         }
     }
