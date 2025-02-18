@@ -2,6 +2,7 @@ package com.example.mydemo.common.composables
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,6 +30,7 @@ fun PicassoImage(url: String, modifier: Modifier = Modifier) {
 
             override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
                 e?.printStackTrace()
+                Log.e("PicassoError", "Failed to load image: ${e?.message}")
             }
 
             override fun onPrepareLoad(placeHolderDrawable: Drawable?) {

@@ -1,10 +1,7 @@
 package com.example.mydemo.common.previews
 
+import android.app.Application
 import androidx.navigation.NavController
-import androidx.navigation.NavOptionsBuilder
 
-class FakeNavController : NavController(null) {
-    override fun navigate(route: String, builder: NavOptionsBuilder.() -> Unit) {
-        // Do nothing, for preview purposes
-    }
-}
+// Fake NavController voor previews zonder navigatiefunctionaliteit.
+class FakeNavController(application: Application) : NavController(application)
