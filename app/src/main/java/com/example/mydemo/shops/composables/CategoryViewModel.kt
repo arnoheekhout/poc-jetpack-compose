@@ -1,11 +1,13 @@
 package com.example.mydemo.shops.composables
 
 import androidx.lifecycle.ViewModel
+import com.example.mydemo.shops.models.Product
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import com.example.mydemo.shops.repository.ProductRepository
 
-class CategoryViewModel : ViewModel() {
-    private val _categories = MutableStateFlow<List<String>>(emptyList())
+class CategoryViewModel(private val productRepository: ProductRepository) : ViewModel() {
+    private val _categories = MutableStateFlow<Map<String, List<Product>>>(emptyMap())
     val categories = _categories.asStateFlow()
 
     init {
@@ -13,6 +15,6 @@ class CategoryViewModel : ViewModel() {
     }
 
     private fun loadCategories() {
-        _categories.value = listOf("Brood", "Ontbijtkoeken", "Pistolets en franse broden", "Patisserie", "Plastiek zakje", "Other categories")
+        _categories.value = productRepository.getCategories()
     }
 }

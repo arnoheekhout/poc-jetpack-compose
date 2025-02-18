@@ -1,5 +1,6 @@
 package com.example.mydemo
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,6 +17,8 @@ import com.example.android_2425_gent10.ui.components.NavBar
 import com.example.mydemo.common.composables.theme.DemoTheme
 import com.example.mydemo.home.ui.HomeScreen
 import com.example.mydemo.shops.ui.CategoryScreen
+import com.example.mydemo.shops.ui.ProductDetailScreen
+import com.example.mydemo.shops.ui.ProductListScreen
 import com.example.mydemo.shops.ui.ShopScreen
 import com.example.mydemo.users.ui.UserScreen
 
@@ -36,6 +39,7 @@ enum class DemoScreens(@StringRes val title: Int) {
     Cart(title = R.string.cart)
 }
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun DemoApp() {
     DemoTheme {
@@ -74,12 +78,20 @@ fun DemoApp() {
                     CategoryScreen(navController = navController, shopName = shopName)
                 }
 
-                composable(route = "productsScreen/{shopName}/{category}") { backStackEntry ->
+                composable(route = "productListScreen/{shopName}/{category}") { backStackEntry ->
                     val shopName = backStackEntry.arguments?.getString("shopName") ?: "Onbekend"
                     val category = backStackEntry.arguments?.getString("category") ?: "Onbekend"
-                    //ProductsScreen(shopName = shopName, category = category)
+
+                    ProductListScreen(navController = navController, shopName = shopName, category = category)
                 }
 
+                composable(route = "productDetailScreen/{shopName}/{category}/{productName}") { backStackEntry ->
+                    val shopName = backStackEntry.arguments?.getString("shopName") ?: "Onbekend"
+                    val category = backStackEntry.arguments?.getString("category") ?: "Onbekend"
+                    val productName = backStackEntry.arguments?.getString("productName") ?: "Onbekend"
+
+                    ProductDetailScreen(navController = navController, shopName = shopName, category = category, productName = productName)
+                }
             }
         }
     }
