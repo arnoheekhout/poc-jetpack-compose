@@ -11,13 +11,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.*
-import com.example.mydemo.ui.theme.MyDemoTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import com.example.android_2425_gent10.ui.components.NavBar
 import com.example.mydemo.ui.home.HomeScreen
+import com.example.mydemo.ui.theme.AppTheme
 import com.example.mydemo.ui.users.UserScreen
 
 class MainActivity : ComponentActivity() {
@@ -39,7 +39,7 @@ enum class DemoScreens(@StringRes val title: Int) {
 
 @Composable
 fun DemoApp() {
-    MyDemoTheme {
+    AppTheme {
         val navController = rememberNavController()
 
         Scaffold(
