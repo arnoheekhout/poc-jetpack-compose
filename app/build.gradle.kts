@@ -27,6 +27,21 @@ android {
             )
         }
     }
+
+    flavorDimensions += "whitelabel"
+    productFlavors {
+        create("groen") {
+            dimension = "whitelabel"
+            applicationIdSuffix = ".groen"
+            versionNameSuffix = "-groen"
+        }
+        create("rood") {
+            dimension = "whitelabel"
+            applicationIdSuffix = ".rood"
+            versionNameSuffix = "-rood"
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
