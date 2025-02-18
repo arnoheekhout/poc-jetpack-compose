@@ -13,7 +13,7 @@ import androidx.navigation.compose.*
 import com.example.android_2425_gent10.ui.components.NavBar
 import com.example.mydemo.common.composables.theme.DemoTheme
 import com.example.mydemo.home.ui.HomeScreen
-import com.example.mydemo.ui.theme.AppTheme
+import com.example.mydemo.shops.ui.ShopScreen
 import com.example.mydemo.users.ui.UserScreen
 
 class MainActivity : ComponentActivity() {
@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
 enum class DemoScreens(@StringRes val title: Int) {
     Home(title = R.string.home),
     User(title = R.string.user),
-    Shops(title = R.string.shops),
+    Shop(title = R.string.shops),
     Cart(title = R.string.cart)
 }
 
@@ -62,6 +62,9 @@ fun DemoApp() {
                     })
                 }
 
+                composable(route = DemoScreens.Shop.name) {
+                    ShopScreen(navController = navController)
+                }
             }
         }
     }

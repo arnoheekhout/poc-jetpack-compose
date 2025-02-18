@@ -3,6 +3,7 @@ package com.example.android_2425_gent10.ui.components
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -29,6 +30,7 @@ fun NavBar(
         val items = buildList {
             add(NavigationItem.Home)
             add(NavigationItem.User)
+            add(NavigationItem.Shop)
         }
 
         items.forEach { item ->
@@ -65,4 +67,5 @@ fun NavBar(
 sealed class NavigationItem(var title: String, var route: String, var icon: ImageVector) {
     object Home : NavigationItem("Home", "Home", Icons.Filled.Home)
     object User : NavigationItem("User", "User", Icons.Filled.DateRange)
+    object Shop : NavigationItem("Shop", "Shop", Icons.Filled.LocationOn)
 }
