@@ -9,7 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import com.example.android_2425_gent10.ui.components.NavBar
 import com.example.mydemo.common.composables.theme.DemoTheme
 import com.example.mydemo.home.ui.HomeScreen
@@ -29,7 +34,7 @@ class MainActivity : ComponentActivity() {
 enum class DemoScreens(@StringRes val title: Int) {
     Home(title = R.string.home),
     User(title = R.string.user),
-    Shop(title = R.string.shops),
+    Shops(title = R.string.shops),
     Cart(title = R.string.cart)
 }
 
