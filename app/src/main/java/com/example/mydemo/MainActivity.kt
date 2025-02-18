@@ -17,7 +17,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import com.example.android_2425_gent10.ui.components.NavBar
 import com.example.mydemo.ui.home.HomeScreen
-import com.example.mydemo.ui.theme.AppTheme
+import com.example.mydemo.ui.theme.DemoTheme
 import com.example.mydemo.ui.users.UserScreen
 
 class MainActivity : ComponentActivity() {
@@ -39,7 +39,7 @@ enum class DemoScreens(@StringRes val title: Int) {
 
 @Composable
 fun DemoApp() {
-    AppTheme {
+    DemoTheme {
         val navController = rememberNavController()
 
         Scaffold(
