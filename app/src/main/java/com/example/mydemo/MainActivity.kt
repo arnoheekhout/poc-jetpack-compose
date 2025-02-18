@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.*
 import com.example.android_2425_gent10.ui.components.NavBar
+import com.example.mydemo.common.composables.theme.DemoTheme
 import com.example.mydemo.home.ui.HomeScreen
 import com.example.mydemo.ui.theme.AppTheme
 import com.example.mydemo.users.ui.UserScreen
@@ -34,7 +35,7 @@ enum class DemoScreens(@StringRes val title: Int) {
 
 @Composable
 fun DemoApp() {
-    AppTheme {
+    DemoTheme {
         val navController = rememberNavController()
 
         Scaffold(
