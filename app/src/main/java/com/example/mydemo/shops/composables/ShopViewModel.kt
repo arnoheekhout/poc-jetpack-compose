@@ -9,16 +9,16 @@ class ShopViewModel: ViewModel() {
     val searchQuery: StateFlow<String> = _searchQuery
 
     private val diffBakers = listOf(
-        Baker("Bakkerij Joeri", "Antwerpen"),
-        Baker("Bakkerij Joeri", "Wichelen"),
-        Baker("Joeri Hamme", "Hamme"),
-        Baker("Bakkerij Tartan", "Serskamp"),
-        Baker("Bakkerij Tuytelaers", "Arendonk"),
-        Baker("Bakkerij Gregory", "Stekene"),
-        Baker("Bakkerij Thienpondt", "Affligem"),
-        Baker("Thienpondt BVBA", "Waasmunster"),
-        Baker("Bakkerij Lippens", "Sint-Martems-Latem"),
-        Baker("Bakkerij Boll", "Dendermonde")
+        Baker("Bakkerij Joeri", "Demostraat 1,", "Antwerpen"),
+        Baker("Bakkerij Joeri", "Demostraat 2,", "Wichelen"),
+        Baker("Bakkerij Tartan", "Demostraat 3,", "Hamme"),
+        Baker("Bakkerij Tartan", "Demostraat 4,", "Serskamp"),
+        Baker("Bakkerij Tuytelaers", "Demostraat 5,", "Arendonk"),
+        Baker("Bakkerij Gregory", "Demostraat 6,", "Antwerpen"),
+        Baker("Bakkerij Thienpondt", "Demostraat 7,", "Affligem"),
+        Baker("Bakkerij Timaya", "Demostraat 8,", "Waasmunster"),
+        Baker("Bakkerij Lippens", "Demostraat 9,", "Sint-Martems-Latem"),
+        Baker("Bakkerij Boll", "Demostraat 10,", "Wichelen")
     )
 
     private val _filteredBakers = MutableStateFlow(diffBakers)
@@ -32,4 +32,4 @@ class ShopViewModel: ViewModel() {
     }
 }
 
-data class Baker(val name: String, val location: String)
+data class Baker(val name: String, val address: String, val location: String)

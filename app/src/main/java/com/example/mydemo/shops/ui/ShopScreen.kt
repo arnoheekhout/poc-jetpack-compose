@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -109,6 +110,11 @@ fun ShopScreen(navController: NavController, viewModel: ShopViewModel = viewMode
                                 .clickable {
                                     navController.navigate("shopDetail/${baker.name}")
                                 }
+                                .border(2.dp, MaterialTheme.colorScheme.onTertiary,
+                                    RoundedCornerShape(8.dp)),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.background
+                            )
                         ) {
                             Column(modifier = Modifier.padding(16.dp)) {
                                 Text(
@@ -116,7 +122,7 @@ fun ShopScreen(navController: NavController, viewModel: ShopViewModel = viewMode
                                     style = MaterialTheme.typography.displayMedium
                                 )
                                 Text(
-                                    text = "📍 ${baker.location}",
+                                    text = "${baker.address} ${baker.location}",
                                     style = MaterialTheme.typography.displaySmall
                                 )
                             }
