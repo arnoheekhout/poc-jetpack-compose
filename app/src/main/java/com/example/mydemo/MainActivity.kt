@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
 enum class DemoScreens(@StringRes val title: Int) {
     Home(title = R.string.home),
     User(title = R.string.user),
-    Shops(title = R.string.shops),
+    Shop(title = R.string.shops),
     Cart(title = R.string.cart)
 }
 
