@@ -1,32 +1,98 @@
+// Stuk van project RISE
 package com.example.mydemo.ui.users
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.mydemo.mockdata.User
 import com.example.mydemo.mockdata.mockUsers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import java.io.IOException
 
-// Use sealed interface/class for state pattern
+
+// State van de viewmodel
 sealed interface UserScreenUiState {
     data object Loading : UserScreenUiState
     data class Success(val user: User) : UserScreenUiState
-    data class Error(val errorMessage: String) : UserScreenUiState
+    data class Error(val message: String) : UserScreenUiState
 }
 
 class UserScreenViewModel : ViewModel() {
     private val _uiState = MutableStateFlow<UserScreenUiState>(UserScreenUiState.Loading)
     val uiState: StateFlow<UserScreenUiState> = _uiState.asStateFlow()
 
+    var isEditing = mutableStateOf(false)
+
+    private val _localUser = MutableStateFlow(User("", "", "", ""))
+    val localUser: StateFlow<User> = _localUser
+
+    private val _error = MutableStateFlow<UserError?>(null)
+    val error: StateFlow<UserError?> = _error.asStateFlow()
+
     init {
         loadUser()
     }
 
     private fun loadUser() {
-        mockUsers.firstOrNull()?.let { user ->
-            _uiState.value = UserScreenUiState.Success(user)
-        } ?: run {
-            _uiState.value = UserScreenUiState.Error("No user found")
+        viewModelScope.launch {
+            try {
+                mockUsers.firstOrNull()?.let { user ->
+                    _uiState.value = UserScreenUiState.Success(user)
+                    _localUser.value = user
+                } ?: run {
+                    _error.value = UserError.UserNotFound
+                }
+            } catch (e: Exception) {
+                _error.value = UserError.UnknownError(e)
+            }
         }
     }
+
+    fun updateLocalUser(
+        name: String? = null,
+        email: String? = null,
+        phoneNumber: String? = null
+    ) {
+        _localUser.value = _localUser.value.copy(
+            name = name ?: _localUser.value.name,
+            email = email ?: _localUser.value.email,
+            phoneNumber = phoneNumber ?: _localUser.value.phoneNumber
+        )
+        validateFields()
+    }
+
+    private fun validateFields(): UserError.ValidationError? {
+        val nameError = if (_localUser.value.name.isBlank()) "Name cannot be empty" else null
+        val emailError = if (_localUser.value.email.isBlank()) "Email cannot be empty" else null
+        val phoneError = if (_localUser.value.phoneNumber.isBlank()) "Phone cannot be empty" else null
+
+        return if (nameError != null || emailError != null || phoneError != null) {
+            UserError.ValidationError(nameError, emailError, phoneError)
+        } else null
+    }
+
+    fun updateUser() {
+        viewModelScope.launch {
+            try {
+                val validationError = validateFields()
+                if (validationError != null) {
+                    _error.value = validationError
+                    return@launch
+                }
+
+                _uiState.value = UserScreenUiState.Success(_localUser.value)
+                isEditing.value = false
+                _error.value = null
+            } catch (e: Exception) {
+                _error.value = when (e) {
+                    is IOException -> UserError.NetworkError
+                    else -> UserError.UnknownError(e)
+                }
+            }
+        }
+    }
+
 }
