@@ -25,7 +25,7 @@ fun ProductDetailScreen(
     productName: String,
     productRepository: ProductRepository = ProductRepository(),
     viewModel: ProductViewModel = viewModel(factory = ProductViewModelFactory(productRepository)),
-    cartViewModel: CartViewModel = viewModel(navController.currentBackStackEntry!!) // zelfde instantie doorgeven naar schermen
+    cartViewModel: CartViewModel = viewModel()
 ) {
     viewModel.loadProduct(productName)
     val currentProduct = viewModel.product.collectAsState().value

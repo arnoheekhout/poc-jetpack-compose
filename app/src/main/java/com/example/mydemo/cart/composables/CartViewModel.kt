@@ -25,8 +25,4 @@ class CartViewModel : ViewModel() {
     fun removeFromCart(productName: String) {
         _cartItems.value = _cartItems.value.filterNot { it.name == productName }
     }
-
-    fun clearCart() {
-        _cartItems.value = emptyList()
-    }
 }

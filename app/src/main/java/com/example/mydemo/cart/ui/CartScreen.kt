@@ -1,8 +1,11 @@
 package com.example.mydemo.cart.ui
 
+import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -14,7 +17,7 @@ import com.example.mydemo.cart.composables.CartViewModel
 
 @Composable
 fun CartScreen(
-    navController: NavController, cartViewModel: CartViewModel = viewModel(navController.currentBackStackEntry!!)
+    navController: NavController, cartViewModel: CartViewModel = viewModel()
 ) {
     val cartItems = cartViewModel.cartItems.collectAsState().value
 
@@ -37,36 +40,35 @@ fun CartScreen(
                             .padding(8.dp),
                         elevation = CardDefaults.cardElevation(4.dp)
                     ) {
-                        Column(modifier = Modifier.padding(16.dp)) {
-                            Text(item.name, style = MaterialTheme.typography.bodyLarge)
-                            Text("Prijs: €${String.format("%.2f", item.price)}")
-                            Text("Aantal: ${item.quantity}")
-                            Text("Totaal: €${String.format("%.2f", item.price * item.quantity)}")
-
-                            Spacer(modifier = Modifier.height(8.dp))
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween
+                        Box(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp)
                             ) {
-                                Button(
-                                    onClick = { cartViewModel.removeFromCart(item.name) },
-                                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
-                                ) {
-                                    Text("Verwijder")
-                                }
+                                Text(item.name, style = MaterialTheme.typography.bodyLarge)
+                                Text("Prijs: €${String.format("%.2f", item.price)}")
+                                Text("Aantal: ${item.quantity}")
+                                Text("Totaal: €${String.format("%.2f", item.price * item.quantity)}")
+                            }
+
+                            IconButton(
+                                onClick = { cartViewModel.removeFromCart(item.name) },
+                                modifier = Modifier
+                                    .align(Alignment.TopEnd)
+                                    .padding(8.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = "Verwijder item",
+                                    tint = MaterialTheme.colorScheme.error
+                                )
                             }
                         }
                     }
                 }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Button(
-                onClick = { cartViewModel.clearCart() }, modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Leeg winkelmand")
             }
         }
     }
