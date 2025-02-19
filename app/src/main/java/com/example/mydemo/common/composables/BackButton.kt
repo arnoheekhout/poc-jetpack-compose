@@ -20,7 +20,7 @@ fun BackButton(
 ) {
     Box(
         modifier = modifier
-            .padding(16.dp)
+            .padding(8.dp)
             .size(32.dp)
             .clickable { onBack() }
 
@@ -36,5 +36,5 @@ fun BackButton(
 @Preview
 @Composable
 fun PreviewBackButton() {
-    BackButton(onBack = { /*nothing happens, its for preview*/  })
+    BackButton(onBack = { /*nothing happens, its a preview*/  })
 }

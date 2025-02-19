@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.mydemo.common.composables.BackButton
 import com.example.mydemo.shops.composables.CategoryViewModel
 import com.example.mydemo.shops.factories.CategoryViewModelFactory
 import com.example.mydemo.shops.repository.ProductRepository
@@ -32,7 +33,14 @@ fun ProductListScreen(
 ) {
     val products = viewModel.categories.collectAsState().value[category] ?: emptyList()
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(16.dp)) {
+        BackButton(
+            onBack = { navController.popBackStack() }
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+
         Text(text = category, style = MaterialTheme.typography.headlineSmall)
         Spacer(modifier = Modifier.height(16.dp))
 

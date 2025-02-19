@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.items
 import com.example.mydemo.shops.composables.CategoryViewModel
 import com.example.mydemo.shops.factories.CategoryViewModelFactory
 import com.example.mydemo.shops.repository.ProductRepository
+import com.example.mydemo.common.composables.BackButton
 
 @Composable
 fun CategoryScreen(
@@ -31,7 +32,17 @@ fun CategoryScreen(
 ) {
     val categories = viewModel.categories.collectAsState().value
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+
+        BackButton(
+            onBack = { navController.popBackStack() }
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+
         Text(text = shopName, style = MaterialTheme.typography.headlineSmall)
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -43,8 +54,7 @@ fun CategoryScreen(
                         .padding(8.dp)
                         .clickable {
                             navController.navigate("productListScreen/$shopName/$category")
-                        }
-                ) {
+                        }) {
                     Text(
                         text = category,
                         modifier = Modifier.padding(16.dp),

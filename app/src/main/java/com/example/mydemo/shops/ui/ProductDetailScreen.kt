@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.mydemo.common.composables.BackButton
 import com.example.mydemo.shops.composables.ProductViewModel
 import com.example.mydemo.shops.factories.ProductViewModelFactory
 import com.example.mydemo.shops.repository.ProductRepository
@@ -26,9 +27,17 @@ fun ProductDetailScreen(
     var quantity by remember { mutableStateOf(1) }
 
     currentProduct?.let {
-        Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)) {
+            BackButton(
+                onBack = { navController.popBackStack() }
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+
             Text(text = it.name, style = MaterialTheme.typography.headlineMedium)
             Spacer(modifier = Modifier.height(16.dp))
+
             Text(text = "Price: €${it.price}", style = MaterialTheme.typography.bodyLarge)
 
             Spacer(modifier = Modifier.height(16.dp))

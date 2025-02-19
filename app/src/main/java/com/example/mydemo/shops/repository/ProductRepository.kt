@@ -43,10 +43,6 @@ class ProductRepository {
 
     fun getCategories(): Map<String, List<Product>> = categories
 
-    fun getProductsForCategory(category: String): List<Product> {
-        return categories[category] ?: emptyList()
-    }
-
     fun getProductByName(name: String): Product? {
         return categories.values.flatten().find { it.name == name }
     }
