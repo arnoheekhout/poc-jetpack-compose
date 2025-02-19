@@ -10,10 +10,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.android_2425_gent10.ui.components.NavBar
+import com.example.mydemo.cart.composables.CartViewModel
+import com.example.mydemo.cart.ui.CartScreen
 import com.example.mydemo.common.composables.theme.DemoTheme
 import com.example.mydemo.home.ui.HomeScreen
 import com.example.mydemo.shops.ui.CategoryScreen
@@ -35,7 +38,7 @@ class MainActivity : ComponentActivity() {
 enum class DemoScreens(@StringRes val title: Int) {
     Home(title = R.string.home),
     User(title = R.string.user),
-    Shop(title = R.string.shops),
+    Shop(title = R.string.shop),
     Cart(title = R.string.cart)
 }
 
@@ -44,6 +47,7 @@ enum class DemoScreens(@StringRes val title: Int) {
 fun DemoApp() {
     DemoTheme {
         val navController = rememberNavController()
+        val cartViewModel: CartViewModel = viewModel()
 
         Scaffold(
             bottomBar = {
@@ -73,6 +77,10 @@ fun DemoApp() {
                     ShopScreen(navController = navController)
                 }
 
+                composable(route = DemoScreens.Cart.name) {
+                    CartScreen(navController = navController, cartViewModel = cartViewModel)
+                }
+
                 composable(route = "categoryScreen/{shopName}") { backStackEntry ->
                     val shopName = backStackEntry.arguments?.getString("shopName") ?: "Onbekend"
                     CategoryScreen(navController = navController, shopName = shopName)
@@ -82,16 +90,29 @@ fun DemoApp() {
                     val shopName = backStackEntry.arguments?.getString("shopName") ?: "Onbekend"
                     val category = backStackEntry.arguments?.getString("category") ?: "Onbekend"
 
-                    ProductListScreen(navController = navController, shopName = shopName, category = category)
+                    ProductListScreen(
+                        navController = navController,
+                        shopName = shopName,
+                        category = category
+                    )
                 }
 
                 composable(route = "productDetailScreen/{shopName}/{category}/{productName}") { backStackEntry ->
                     val shopName = backStackEntry.arguments?.getString("shopName") ?: "Onbekend"
                     val category = backStackEntry.arguments?.getString("category") ?: "Onbekend"
-                    val productName = backStackEntry.arguments?.getString("productName") ?: "Onbekend"
+                    val productName =
+                        backStackEntry.arguments?.getString("productName") ?: "Onbekend"
 
-                    ProductDetailScreen(navController = navController, shopName = shopName, category = category, productName = productName)
+                    ProductDetailScreen(
+                        navController = navController,
+                        shopName = shopName,
+                        category = category,
+                        productName = productName,
+                        cartViewModel = cartViewModel
+                    )
                 }
+
+//                composable(route = "cartScreen/") { backStackEntry ->}
             }
         }
     }

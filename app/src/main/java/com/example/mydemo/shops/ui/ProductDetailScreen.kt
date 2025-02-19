@@ -10,10 +10,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.mydemo.cart.composables.CartViewModel
 import com.example.mydemo.common.composables.BackButton
 import com.example.mydemo.shops.composables.ProductViewModel
 import com.example.mydemo.shops.factories.ProductViewModelFactory
 import com.example.mydemo.shops.repository.ProductRepository
+import kotlinx.coroutines.launch
 
 @Composable
 fun ProductDetailScreen(
@@ -22,7 +24,8 @@ fun ProductDetailScreen(
     category: String,
     productName: String,
     productRepository: ProductRepository = ProductRepository(),
-    viewModel: ProductViewModel = viewModel(factory = ProductViewModelFactory(productRepository))
+    viewModel: ProductViewModel = viewModel(factory = ProductViewModelFactory(productRepository)),
+    cartViewModel: CartViewModel = viewModel(navController.currentBackStackEntry!!) // zelfde instantie doorgeven naar schermen
 ) {
     viewModel.loadProduct(productName)
     val currentProduct = viewModel.product.collectAsState().value
@@ -48,11 +51,11 @@ fun ProductDetailScreen(
                 ) {
                     Text(text = product.name, style = MaterialTheme.typography.headlineMedium)
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "Price per stuk: €${String.format("%.2f", product.price)}", fontSize = 18.sp)
+                    Text(text = "Prijs per stuk: €${String.format("%.2f", product.price)}", fontSize = 18.sp)
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Quantity selector!
+                    // Quantity selector
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -60,45 +63,30 @@ fun ProductDetailScreen(
                     ) {
                         Button(
                             onClick = { if (quantity > 1) quantity-- },
-                            shape = RoundedCornerShape(50),
-                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
-                        ) {
-                            Text(text = "-", fontSize = 20.sp)
-                        }
+                            shape = RoundedCornerShape(50)
+                        ) { Text(text = "-", fontSize = 20.sp) }
 
                         Text(text = "$quantity", fontSize = 20.sp)
 
                         Button(
                             onClick = { quantity++ },
-                            shape = RoundedCornerShape(50),
-                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
-                        ) {
-                            Text(text = "+", fontSize = 20.sp)
-                        }
+                            shape = RoundedCornerShape(50)
+                        ) { Text(text = "+", fontSize = 20.sp) }
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Calculation
+                    // Total Price
                     val totalPrice = product.price * quantity
-                    Text(
-                        text = "Totaal: €${String.format("%.2f", totalPrice)}",
-                        fontSize = 22.sp,
-                        style = MaterialTheme.typography.bodyLarge
-                    )
+                    Text(text = "Totaal: €${String.format("%.2f", totalPrice)}", fontSize = 22.sp)
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Add to basket button TODO
                     Button(
-                        onClick = {
-                            // TODO: Voeg product + quantity toe aan winkelmand
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(8.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
+                        onClick = { cartViewModel.addToCart(product, quantity) },
+                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text(text = "+ ADD TO BASKET", fontSize = 18.sp)
+                        Text(text = "+ Add to Basket", fontSize = 18.sp)
                     }
                 }
             }
@@ -107,6 +95,6 @@ fun ProductDetailScreen(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text("Product not found", style = MaterialTheme.typography.bodyLarge)
+        Text("Product niet gevonden", style = MaterialTheme.typography.bodyLarge)
     }
 }
