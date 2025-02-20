@@ -1,15 +1,11 @@
 package com.example.mydemo.home.ui
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -27,23 +23,23 @@ fun HomeScreen(
 ) {
     Surface(
         color = MaterialTheme.colorScheme.surface,
-        contentColor = MaterialTheme.colorScheme.onSurface
+        contentColor = MaterialTheme.colorScheme.onSurface,
+        modifier = Modifier.fillMaxSize()
     ) {
         Column(
-            modifier = modifier.padding(24.dp)
+            modifier = modifier
+                .padding(24.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            FlavorComponent(modifier=modifier)
+            FlavorComponent(modifier = Modifier.fillMaxWidth())
 
-            Spacer(modifier = Modifier.size(24.dp))
-
-            NetworkComponent(modifier=modifier)
-
-            Spacer(modifier = Modifier.size(24.dp))
+            NetworkComponent(modifier = Modifier.fillMaxWidth())
 
             TermsAndConditionsComponent(
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.fillMaxWidth(),
                 onClick = { navController.navigate(DemoScreens.Terms.name) }
-                )
+            )
         }
     }
 }
@@ -53,11 +49,17 @@ fun TermsAndConditionsComponent(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
-
     TextButton(
-        onClick = onClick
+        onClick = onClick,
+        modifier = modifier,
+        colors = ButtonDefaults.textButtonColors(
+            contentColor = MaterialTheme.colorScheme.primary
+        )
     ) {
-        Text("Terms and conditions and privacy policy")
+        Text(
+            text = "Terms and Conditions and Privacy Policy",
+            fontWeight = FontWeight.Medium
+        )
     }
 }
 
@@ -69,42 +71,64 @@ fun FlavorComponent(modifier: Modifier = Modifier) {
         modifier = modifier
     ) {
         Text(
-            text = "Flavor demo",
+            text = "Flavor Demo",
+            style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold
         )
 
+        Spacer(modifier = Modifier.size(8.dp))
+
         Text(
             text = "Welcome to $appName",
-            color = MaterialTheme.colorScheme.onSurface
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
         )
+
+        Spacer(modifier = Modifier.size(16.dp))
 
         // Via disk
         Image(
             painter = painterResource(id = R.drawable.logo_header_small),
-            contentDescription = "Logo header small"
+            contentDescription = "Logo header small",
+            modifier = Modifier
+                .size(150.dp)
+                .align(Alignment.CenterHorizontally)
         )
     }
 }
 
-
 @Composable
 fun NetworkComponent(modifier: Modifier = Modifier) {
-    Column (modifier = modifier) {
-        Text(
-            text = "Images via netwerk demo",
-            color = MaterialTheme.colorScheme.onSurface,
-            fontWeight = FontWeight.Bold
+    Card(
+        modifier = modifier,
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+            contentColor = MaterialTheme.colorScheme.onSurfaceVariant
         )
-
-        // Via het internet
-        AsyncImage(
-            // logo header small
-            model = "https://bakeronline.be/assets/images/bakeronline/logo-header-small.svg",
-            contentDescription = "Bakeronline logo",
+    ) {
+        Column(
             modifier = Modifier
-                .padding(top = 16.dp)
-                .size(200.dp)
-        )
+                .padding(16.dp)
+                .fillMaxWidth()
+        ) {
+            Text(
+                text = "Images via Network Demo",
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(modifier = Modifier.size(16.dp))
+
+            // Via het internet
+            AsyncImage(
+                model = "https://bakeronline.be/assets/images/bakeronline/logo-header-small.svg",
+                contentDescription = "Bakeronline logo",
+                modifier = Modifier
+                    .size(200.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
+        }
     }
 }

@@ -69,7 +69,7 @@ fun DemoApp() {
                 }
 
                 composable(route = DemoScreens.Terms.name) {
-                    TermsAndConditionsScreen(navController = navController)
+                    TermsAndConditionsScreen()
                 }
             }
         }
