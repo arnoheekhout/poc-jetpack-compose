@@ -95,8 +95,8 @@ class UserScreenViewModel : ViewModel() {
 
     private fun validateFields(): UserError.ValidationError? {
         val nameError = if (_localUser.value.name.isBlank()) "Name cannot be empty" else null
-        val emailError = if (_localUser.value.email.isBlank()) "Email cannot be empty" else null
-        val phoneError = if (_localUser.value.phoneNumber.isBlank()) "Phone cannot be empty" else null
+        val phoneError = if (!android.util.Patterns.PHONE.matcher(_localUser.value.phoneNumber).matches()) "Phone cannot be empty or invalid" else null
+        var emailError = if(!android.util.Patterns.EMAIL_ADDRESS.matcher(_localUser.value.email).matches()) "Email cannot be empty or invalid" else null
 
         return if (nameError != null || emailError != null || phoneError != null) {
             UserError.ValidationError(nameError, emailError, phoneError)
