@@ -1,5 +1,6 @@
 package com.example.mydemo.cart.composables
 
+import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +18,7 @@ class CartViewModel : ViewModel() {
         if (existingItem != null) {
             existingItem.quantity += quantity
         } else {
-            currentList.add(CartItem(product.name, product.price, quantity))
+            currentList.add(CartItem(product.name, product.price, quantity, Image = product.image))
         }
         _cartItems.value = currentList
     }

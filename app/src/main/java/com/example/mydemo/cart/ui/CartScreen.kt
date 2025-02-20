@@ -1,6 +1,6 @@
 package com.example.mydemo.cart.ui
 
-import androidx.compose.ui.Alignment
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -9,7 +9,9 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -40,31 +42,57 @@ fun CartScreen(
                             .padding(8.dp),
                         elevation = CardDefaults.cardElevation(4.dp)
                     ) {
-                        Box(
-                            modifier = Modifier.fillMaxWidth()
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
                         ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp)
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text(item.name, style = MaterialTheme.typography.bodyLarge)
-                                Text("Prijs: €${String.format("%.2f", item.price)}")
-                                Text("Aantal: ${item.quantity}")
-                                Text("Totaal: €${String.format("%.2f", item.price * item.quantity)}")
-                            }
+                                Column(
+                                    modifier = Modifier.weight(1f)
+                                ) {
+                                    Text(item.name, style = MaterialTheme.typography.bodyLarge)
+                                    Text("Prijs: €${String.format("%.2f", item.price)}")
+                                    Text("Aantal: ${item.quantity}")
+                                    Text(
+                                        "Totaal: €${
+                                            String.format(
+                                                "%.2f",
+                                                item.price * item.quantity
+                                            )
+                                        }"
+                                    )
+                                }
+                                Column(
+                                    horizontalAlignment = Alignment.End,
+                                    verticalArrangement = Arrangement.Center
+                                ) {
+                                    IconButton(
+                                        onClick = { cartViewModel.removeFromCart(item.name) }
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.Delete,
+                                            contentDescription = "Delete",
+                                            tint = MaterialTheme.colorScheme.error
+                                        )
+                                    }
 
-                            IconButton(
-                                onClick = { cartViewModel.removeFromCart(item.name) },
-                                modifier = Modifier
-                                    .align(Alignment.TopEnd)
-                                    .padding(8.dp)
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Delete,
-                                    contentDescription = "Verwijder item",
-                                    tint = MaterialTheme.colorScheme.error
-                                )
+                                    Spacer(modifier = Modifier.height(8.dp))
+
+                                    item.Image?.let {
+                                        Image(
+                                            bitmap = it.asImageBitmap(),
+                                            contentDescription = item.name,
+                                            modifier = Modifier
+                                                .width(100.dp)
+                                                .height(100.dp)
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
