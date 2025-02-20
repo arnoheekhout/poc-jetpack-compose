@@ -18,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -99,8 +98,8 @@ fun UserScreen(
 
 @Composable
 fun EditScreen(
-    viewModel: UserScreenViewModel = viewModel(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: UserScreenViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val localUser by viewModel.localUser.collectAsState()
@@ -141,18 +140,25 @@ fun EditScreen(
 }
 
 @Composable
-fun EmailScreen() {
-    var checked by rememberSaveable { mutableStateOf(true) }
+fun EmailScreen(
+    modifier: Modifier = Modifier,
+    viewModel: UserScreenViewModel = viewModel()
+) {
+    val emailSettings by viewModel.emailSettings.collectAsState()
 
-    Column {
+    Column (
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
         Row (
             verticalAlignment = Alignment.CenterVertically) {
             Text(
                 "When I placed an order"
             )
             Checkbox(
-                checked = checked,
-                onCheckedChange = { checked = it }
+                checked = emailSettings.notifyOnOrder,
+                onCheckedChange = { viewModel.updateEmailSettings(notifyOnOrder = it) }
             )
         }
 
@@ -162,8 +168,8 @@ fun EmailScreen() {
                 "When I got a reaction to an order"
             )
             Checkbox(
-                checked = checked,
-                onCheckedChange = { checked = it }
+                checked = emailSettings.notifyOnReaction,
+                onCheckedChange = { viewModel.updateEmailSettings(notifyOnReaction = it) }
             )
         }
     }

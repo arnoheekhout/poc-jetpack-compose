@@ -1,6 +1,7 @@
 // Stuk van project RISE
 package com.example.mydemo.users.ui
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -46,8 +47,12 @@ class UserScreenViewModel : ViewModel() {
     private val _error = MutableStateFlow<UserError?>(null)
     val error: StateFlow<UserError?> = _error.asStateFlow()
 
+    private val _emailSettings = MutableStateFlow(EmailSettings())
+    val emailSettings: StateFlow<EmailSettings> = _emailSettings.asStateFlow()
+
     init {
         loadUser()
+        loadEmailSettings()
     }
 
     private fun loadUser() {
@@ -59,6 +64,16 @@ class UserScreenViewModel : ViewModel() {
                 } ?: run {
                     _error.value = UserError.UserNotFound
                 }
+            } catch (e: Exception) {
+                _error.value = UserError.UnknownError(e)
+            }
+        }
+    }
+
+    private fun loadEmailSettings() {
+        viewModelScope.launch {
+            try {
+                _emailSettings.value = EmailSettings()
             } catch (e: Exception) {
                 _error.value = UserError.UnknownError(e)
             }
@@ -105,6 +120,27 @@ class UserScreenViewModel : ViewModel() {
                     is IOException -> UserError.NetworkError
                     else -> UserError.UnknownError(e)
                 }
+            }
+        }
+    }
+
+    fun updateEmailSettings(
+        notifyOnOrder: Boolean? = null,
+        notifyOnReaction: Boolean? = null
+    ) {
+        _emailSettings.value = _emailSettings.value.copy(
+            notifyOnOrder = notifyOnOrder ?: _emailSettings.value.notifyOnOrder,
+            notifyOnReaction = notifyOnReaction ?: _emailSettings.value.notifyOnReaction
+        )
+        saveEmailSettings()
+    }
+
+    private fun saveEmailSettings() {
+        viewModelScope.launch {
+            try {
+                Log.d("Email settings saved", _emailSettings.value.toString())
+            } catch (e: Exception) {
+                _error.value = UserError.UnknownError(e)
             }
         }
     }
