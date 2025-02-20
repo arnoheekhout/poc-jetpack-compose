@@ -144,23 +144,28 @@ fun EditScreen(
 fun EmailScreen() {
     var checked by rememberSaveable { mutableStateOf(true) }
 
-    Row (
-        verticalAlignment = Alignment.CenterVertically) {
-        Text(
-            "When I placed an order"
-        )
-        Checkbox(
-            checked = checked,
-            onCheckedChange = { checked = it }
-        )
+    Column {
+        Row (
+            verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                "When I placed an order"
+            )
+            Checkbox(
+                checked = checked,
+                onCheckedChange = { checked = it }
+            )
+        }
 
-        Text(
-            "When I got a reaction to an order"
-        )
-        Checkbox(
-            checked = checked,
-            onCheckedChange = { checked = it }
-        )
+        Row (
+            verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                "When I got a reaction to an order"
+            )
+            Checkbox(
+                checked = checked,
+                onCheckedChange = { checked = it }
+            )
+        }
     }
 }
 
