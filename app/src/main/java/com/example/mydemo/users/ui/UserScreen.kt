@@ -1,4 +1,4 @@
-package com.example.mydemo.ui.users
+package com.example.mydemo.users.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

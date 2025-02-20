@@ -6,19 +6,17 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.navigation.compose.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.android_2425_gent10.ui.components.NavBar
-import com.example.mydemo.ui.home.HomeScreen
-import com.example.mydemo.ui.theme.DemoTheme
-import com.example.mydemo.ui.users.UserScreen
+import com.example.mydemo.common.composables.theme.DemoTheme
+import com.example.mydemo.home.ui.HomeScreen
+import com.example.mydemo.shops.ui.ShopScreen
+import com.example.mydemo.users.ui.UserScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +31,7 @@ class MainActivity : ComponentActivity() {
 enum class DemoScreens(@StringRes val title: Int) {
     Home(title = R.string.home),
     User(title = R.string.user),
-    Shops(title = R.string.shops),
+    Shop(title = R.string.shops),
     Cart(title = R.string.cart)
 }
 
@@ -66,6 +64,9 @@ fun DemoApp() {
                     })
                 }
 
+                composable(route = DemoScreens.Shop.name) {
+                    ShopScreen(navController = navController)
+                }
             }
         }
     }
