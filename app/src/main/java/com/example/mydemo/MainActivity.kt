@@ -13,18 +13,22 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.example.android_2425_gent10.ui.components.NavBar
 import com.example.mydemo.cart.composables.CartViewModel
 import com.example.mydemo.cart.ui.CartScreen
 import com.example.mydemo.cart.ui.ConfirmationScreen
 import com.example.mydemo.cart.ui.DateTimePickerScreen
 import com.example.mydemo.common.composables.theme.DemoTheme
 import com.example.mydemo.home.ui.HomeScreen
+import com.example.mydemo.home.ui.TermsAndConditionsScreen
+import com.example.mydemo.navigation.NavBar
 import com.example.mydemo.shops.ui.CategoryScreen
 import com.example.mydemo.shops.ui.ProductDetailScreen
 import com.example.mydemo.shops.ui.ProductListScreen
 import com.example.mydemo.shops.ui.ShopScreen
+import com.example.mydemo.users.ui.EditScreen
+import com.example.mydemo.users.ui.EmailScreen
 import com.example.mydemo.users.ui.UserScreen
 
 class MainActivity : ComponentActivity() {
@@ -40,8 +44,11 @@ class MainActivity : ComponentActivity() {
 enum class DemoScreens(@StringRes val title: Int) {
     Home(title = R.string.home),
     User(title = R.string.user),
-    Shop(title = R.string.shop),
-    Cart(title = R.string.cart)
+    EditScreen(title = R.string.edituser),
+    EmailScreen(title = R.string.emailuser),
+    Shop(title = R.string.shops),
+    Cart(title = R.string.cart),
+    Terms(title = R.string.terms)
 }
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -61,18 +68,36 @@ fun DemoApp() {
                 startDestination = DemoScreens.Home.name,
                 modifier = Modifier.padding(innerPadding)
             ) {
+
                 composable(route = DemoScreens.Home.name) {
-                    HomeScreen(
-                        onNextButtonClicked = {
-                            navController.navigate(DemoScreens.Home)
-                        })
+                    HomeScreen(navController = navController)
                 }
 
+                navigation(
+                    startDestination = DemoScreens.User.name, // Start destination of the nested graph
+                    route = "user_tab" // Unique route for the nested graph
+                ) {
+                    // Main User Screen
+                    composable(route = DemoScreens.User.name) {
+                        UserScreen(
+                            onEditButtonClicked = {
+                                navController.navigate(DemoScreens.EditScreen.name)
+                            },
+                            onEmailButtonClicked = {
+                                navController.navigate(DemoScreens.EmailScreen.name)
+                            }
+                        )
+                    }
 
-                composable(route = DemoScreens.User.name) {
-                    UserScreen(onNextButtonClicked = {
-                        navController.navigate(DemoScreens.User)
-                    })
+                    // Edit Screen (Nested)
+                    composable(route = DemoScreens.EditScreen.name) {
+                        EditScreen()
+                    }
+
+                    // Email Screen (Nested)
+                    composable(route = DemoScreens.EmailScreen.name) {
+                        EmailScreen()
+                    }
                 }
 
                 composable(route = DemoScreens.Shop.name) {
@@ -120,6 +145,10 @@ fun DemoApp() {
 
                 composable(route = "confirmationScreen") {
                     ConfirmationScreen(navController = navController, cartViewModel = cartViewModel)
+                }
+
+                composable(route = DemoScreens.Terms.name) {
+                    TermsAndConditionsScreen()
                 }
             }
         }
