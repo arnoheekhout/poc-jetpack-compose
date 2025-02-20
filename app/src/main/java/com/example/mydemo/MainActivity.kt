@@ -17,6 +17,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.android_2425_gent10.ui.components.NavBar
 import com.example.mydemo.cart.composables.CartViewModel
 import com.example.mydemo.cart.ui.CartScreen
+import com.example.mydemo.cart.ui.ConfirmationScreen
+import com.example.mydemo.cart.ui.DateTimePickerScreen
 import com.example.mydemo.common.composables.theme.DemoTheme
 import com.example.mydemo.home.ui.HomeScreen
 import com.example.mydemo.shops.ui.CategoryScreen
@@ -112,7 +114,13 @@ fun DemoApp() {
                     )
                 }
 
-//                composable(route = "cartScreen/") { backStackEntry ->}
+                composable(route = "dateTimePickerScreen") {
+                    DateTimePickerScreen(navController = navController)
+                }
+
+                composable(route = "confirmationScreen") {
+                    ConfirmationScreen(navController = navController, cartViewModel = cartViewModel)
+                }
             }
         }
     }

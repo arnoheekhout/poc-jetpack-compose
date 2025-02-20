@@ -1,11 +1,10 @@
 package com.example.mydemo.cart.composables
 
-import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import com.example.mydemo.cart.models.CartItem
 import com.example.mydemo.shops.models.Product
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class CartViewModel : ViewModel() {
     private val _cartItems = MutableStateFlow<List<CartItem>>(emptyList())
@@ -26,4 +25,8 @@ class CartViewModel : ViewModel() {
     fun removeFromCart(productName: String) {
         _cartItems.value = _cartItems.value.filterNot { it.name == productName }
     }
-}
+
+    fun clearCart() {
+            _cartItems.value = emptyList()
+        }
+    }
