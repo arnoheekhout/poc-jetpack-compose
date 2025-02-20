@@ -1,4 +1,4 @@
-package com.example.android_2425_gent10.ui.components
+package com.example.mydemo.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
@@ -32,7 +32,6 @@ fun NavBar(
             add(NavigationItem.User)
             add(NavigationItem.Shop)
         }
-
         items.forEach { item ->
             NavigationBarItem(
                 selected = currentRoute == item.route,
@@ -65,6 +64,7 @@ fun NavBar(
 }
 
 sealed class NavigationItem(var title: String, var route: String, var icon: ImageVector) {
+    // Bottom Bar
     object Home : NavigationItem("Home", "Home", Icons.Filled.Home)
     object User : NavigationItem("User", "User", Icons.Filled.DateRange)
     object Shop : NavigationItem("Shop", "Shop", Icons.Filled.LocationOn)
