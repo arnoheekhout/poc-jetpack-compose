@@ -38,7 +38,7 @@ fun ProductDetailScreen(
 
     currentProduct?.let { product ->
 
-        val productImage = product.image  // Retrieve image here from the product object
+        val productImage = product.image
 
         Column(
             modifier = Modifier

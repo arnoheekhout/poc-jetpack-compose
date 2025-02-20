@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.mydemo.cart.composables.CartViewModel
+import com.example.mydemo.common.composables.BackButton
+import com.example.mydemo.common.composables.PayButton
 
 @Composable
 fun CartScreen(
@@ -30,6 +32,8 @@ fun CartScreen(
     ) {
         Text(text = "Winkelmand", style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.height(16.dp))
+
+        PayButton(onClick = { navController.navigate("CartScreen/{DateTimePicker}") })
 
         if (cartItems.isEmpty()) {
             Text("Je winkelmand is leeg.")
