@@ -13,9 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mydemo.R
-import androidx.compose.ui.res.stringResource
 import coil3.compose.AsyncImage
-import com.example.mydemo.ui.theme.DemoTheme
+import com.example.mydemo.common.composables.theme.DemoTheme
 
 @Composable
 fun HomeScreen(
