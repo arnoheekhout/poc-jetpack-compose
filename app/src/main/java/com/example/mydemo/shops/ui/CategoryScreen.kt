@@ -1,5 +1,6 @@
 package com.example.mydemo.shops.ui
 
+import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.platform.LocalContext
 import com.example.mydemo.shops.composables.CategoryViewModel
 import com.example.mydemo.shops.factories.CategoryViewModelFactory
 import com.example.mydemo.shops.repository.ProductRepository
@@ -27,7 +29,7 @@ import com.example.mydemo.common.composables.BackButton
 fun CategoryScreen(
     navController: NavController,
     shopName: String,
-    productRepository: ProductRepository = ProductRepository(),
+    productRepository: ProductRepository = ProductRepository(LocalContext.current),
     viewModel: CategoryViewModel = viewModel(factory = CategoryViewModelFactory(productRepository))
 ) {
     val categories = viewModel.categories.collectAsState().value

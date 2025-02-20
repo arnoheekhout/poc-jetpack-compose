@@ -15,6 +15,6 @@ class CategoryViewModel(private val productRepository: ProductRepository) : View
     }
 
     private fun loadCategories() {
-        _categories.value = productRepository.getCategories()
+        _categories.value = productRepository.getProduct()
     }
 }
