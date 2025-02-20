@@ -13,7 +13,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.mydemo.mockdata.User
+import com.example.mydemo.users.ui.User
 
 @Composable
 fun UserContent(

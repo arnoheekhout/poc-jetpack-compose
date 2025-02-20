@@ -1,11 +1,11 @@
 // Stuk van project RISE
-package com.example.mydemo.ui.users
+package com.example.mydemo.users.ui
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mydemo.mockdata.User
 import com.example.mydemo.mockdata.mockUsers
+import com.example.mydemo.ui.users.UserError
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,6 +19,20 @@ sealed interface UserScreenUiState {
     data class Success(val user: User) : UserScreenUiState
     data class Error(val message: String) : UserScreenUiState
 }
+
+// Setting model
+data class EmailSettings(
+    val notifyOnOrder: Boolean = true,
+    val notifyOnReaction: Boolean = true
+)
+
+// User model
+data class User(
+    val id: String,
+    val name: String,
+    val email: String,
+    val phoneNumber: String
+)
 
 class UserScreenViewModel : ViewModel() {
     private val _uiState = MutableStateFlow<UserScreenUiState>(UserScreenUiState.Loading)
