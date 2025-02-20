@@ -15,6 +15,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.android_2425_gent10.ui.components.NavBar
 import com.example.mydemo.common.composables.theme.DemoTheme
 import com.example.mydemo.home.ui.HomeScreen
+import com.example.mydemo.home.ui.TermsAndConditionsComponent
+import com.example.mydemo.home.ui.TermsAndConditionsScreen
 import com.example.mydemo.shops.ui.ShopScreen
 import com.example.mydemo.users.ui.UserScreen
 
@@ -32,7 +34,8 @@ enum class DemoScreens(@StringRes val title: Int) {
     Home(title = R.string.home),
     User(title = R.string.user),
     Shop(title = R.string.shops),
-    Cart(title = R.string.cart)
+    Cart(title = R.string.cart),
+    Terms(title = R.string.terms)
 }
 
 @Composable
@@ -51,10 +54,7 @@ fun DemoApp() {
                 modifier = Modifier.padding(innerPadding)
             ) {
                 composable(route = DemoScreens.Home.name) {
-                    HomeScreen(
-                        onNextButtonClicked = {
-                            navController.navigate(DemoScreens.Home)
-                        })
+                    HomeScreen(navController = navController)
                 }
 
 
@@ -66,6 +66,10 @@ fun DemoApp() {
 
                 composable(route = DemoScreens.Shop.name) {
                     ShopScreen(navController = navController)
+                }
+
+                composable(route = DemoScreens.Terms.name) {
+                    TermsAndConditionsScreen()
                 }
             }
         }

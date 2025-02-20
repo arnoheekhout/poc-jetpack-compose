@@ -55,8 +55,14 @@ android {
 }
 
 dependencies {
-    // TODO: 1 plaats voor al je versies, steek het in je toml
-    implementation("androidx.navigation:navigation-compose:2.8.7")
+    // Coil
+    implementation(libs.coil.compose)
+    implementation(libs.coil.svg)
+    implementation(libs.coil.network.okhttp)
+
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
