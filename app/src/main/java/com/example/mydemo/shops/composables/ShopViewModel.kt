@@ -3,6 +3,7 @@ package com.example.mydemo.shops.composables
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import com.example.mydemo.shops.models.Baker
 
 class ShopViewModel: ViewModel() {
     private val _searchQuery = MutableStateFlow("")
@@ -31,5 +32,3 @@ class ShopViewModel: ViewModel() {
         }
     }
 }
-
-data class Baker(val name: String, val address: String, val location: String)

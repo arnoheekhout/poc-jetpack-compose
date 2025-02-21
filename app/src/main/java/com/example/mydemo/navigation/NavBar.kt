@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -31,6 +32,7 @@ fun NavBar(
             add(NavigationItem.Home)
             add(NavigationItem.User)
             add(NavigationItem.Shop)
+            add(NavigationItem.Cart)
         }
         items.forEach { item ->
             NavigationBarItem(
@@ -68,4 +70,5 @@ sealed class NavigationItem(var title: String, var route: String, var icon: Imag
     object Home : NavigationItem("Home", "Home", Icons.Filled.Home)
     object User : NavigationItem("User", "User", Icons.Filled.DateRange)
     object Shop : NavigationItem("Shop", "Shop", Icons.Filled.LocationOn)
+    object Cart : NavigationItem("Cart", "Cart", Icons.Filled.ShoppingCart)
 }

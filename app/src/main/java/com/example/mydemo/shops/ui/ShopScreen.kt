@@ -1,12 +1,10 @@
 package com.example.mydemo.shops.ui
 
-import android.R.attr.bitmap
 import android.app.Application
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import com.example.mydemo.R
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,7 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.mydemo.common.composables.PicassoImage
+import com.example.mydemo.R
 import com.example.mydemo.common.previews.FakeNavController
 import com.example.mydemo.helpers.decodeBase64ToBitmap
 import com.example.mydemo.helpers.readBase64FromRaw
@@ -106,7 +104,7 @@ fun ShopScreen(navController: NavController, viewModel: ShopViewModel = viewMode
                                 .fillMaxWidth()
                                 .padding(8.dp)
                                 .clickable {
-                                    navController.navigate("shopDetail/${baker.name}")
+                                    navController.navigate("categoryScreen/${baker.name}")
                                 }
                                 .border(2.dp, MaterialTheme.colorScheme.onTertiary,
                                     RoundedCornerShape(8.dp)),

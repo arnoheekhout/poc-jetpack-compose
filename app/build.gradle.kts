@@ -9,6 +9,9 @@ android {
     compileSdk = 35
 
     defaultConfig {
+        ndk {
+            abiFilters.addAll(setOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64"))
+        }
         applicationId = "com.example.mydemo"
         minSdk = 28
         targetSdk = 35
@@ -72,6 +75,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation("com.squareup.picasso:picasso:2.8")
+    implementation("androidx.compose.material3:material3:1.2.0")
+    implementation("com.google.android.material:material:1.9.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
