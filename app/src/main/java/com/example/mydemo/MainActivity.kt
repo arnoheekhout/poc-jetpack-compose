@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -54,17 +55,28 @@ fun DemoApp() {
         ) { innerPadding ->
             NavHost(
                 navController = navController,
-                startDestination = DemoScreens.Home.name,
+                startDestination = "home_tab",
                 modifier = Modifier.padding(innerPadding)
             ) {
 
-                composable(route = DemoScreens.Home.name) {
-                    HomeScreen(navController = navController)
+                // HOME TAB
+                navigation (
+                    startDestination = DemoScreens.Home.name,
+                    route = "home_tab"
+                ) {
+                    composable(route = DemoScreens.Home.name) {
+                        HomeScreen(navController = navController)
+                    }
+
+                    composable(route = DemoScreens.Terms.name) {
+                        TermsAndConditionsScreen()
+                    }
                 }
 
+                // USER TAB
                 navigation(
-                    startDestination = DemoScreens.User.name, // Start destination of the nested graph
-                    route = "user_tab" // Unique route for the nested graph
+                    startDestination = DemoScreens.User.name,
+                    route = "user_tab"
                 ) {
                     // Main User Screen
                     composable(route = DemoScreens.User.name) {
@@ -93,9 +105,7 @@ fun DemoApp() {
                     ShopScreen(navController = navController)
                 }
 
-                composable(route = DemoScreens.Terms.name) {
-                    TermsAndConditionsScreen()
-                }
+
             }
         }
     }
